@@ -28,7 +28,7 @@ public:
     double length_squared() const;
 
 private:
-    double e[3]{};
+    double e[3];
 };
 
 // point3 is just an alias for vec3
@@ -45,4 +45,3 @@ vec3 operator/(const vec3 &v, double t);
 double dot(const vec3 &u, const vec3 &v);
 vec3 cross(const vec3 &u, const vec3 &v);
 vec3 unit_vector(const vec3 &v);
-
