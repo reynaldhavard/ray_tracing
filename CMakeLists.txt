@@ -7,4 +7,6 @@ set ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 file(GLOB SRC_FILES "src/*.cpp")
 
+include_directories(src)
+
 add_executable(inOneWeekend ${SRC_FILES})
