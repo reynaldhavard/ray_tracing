@@ -1,4 +1,5 @@
 #include "vec3.h"
+#include <cmath>
 
 vec3& vec3::operator+=(const vec3 &v)
 {
@@ -30,6 +31,11 @@ double vec3::length_squared() const
 {
     return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
 
+}
+bool vec3::near_zero() const
+{
+    auto s = 1e-8;
+    return (std::fabs(e[0]) < s) && (std::fabs(e[1]) < s) && (std::fabs(e[2]) < s);
 }
 
 vec3 vec3::random()
@@ -115,4 +121,9 @@ vec3 random_on_hemisphere(const vec3 &normal)
         return on_unit_sphere;
     else
         return -on_unit_sphere;;
+}
+
+vec3 reflect(const vec3& v, const vec3& n)
+{
+    return v - 2 * dot(v, n) * n;
 }

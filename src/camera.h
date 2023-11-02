@@ -4,6 +4,7 @@
 
 #include "color.h"
 #include "hittable.h"
+#include "material.h"
 
 class camera
 {
