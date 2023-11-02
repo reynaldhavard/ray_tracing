@@ -1,7 +1,5 @@
 #pragma once
 
-#include "rtweekend.h"
-
 #include <cmath>
 #include <iostream>
 #include <ostream>
@@ -37,6 +35,10 @@ private:
 
 // point3 is just an alias for vec3
 using point3 = vec3;
+
+// Forward declare random_double, from rtweekend.h
+double random_double();
+double random_double(double min, double max);
 
 // Vector utility functions
 std::ostream& operator<<(std::ostream &out, const vec3 &v);
