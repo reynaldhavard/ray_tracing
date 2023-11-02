@@ -11,6 +11,7 @@ public:
     double aspect_ratio{1.0};
     int image_width{100};
     int samples_per_pixel{10};
+    int max_depth{10};
 
     void render(const hittable& world);
 
@@ -24,5 +25,5 @@ private:
     void initialize();
     ray get_ray(int i, int j) const;
     vec3 pixel_sample_square() const;
-    color ray_color(const ray& r, const hittable& world) const;
+    color ray_color(const ray& r, int depth, const hittable& world) const;
 };
