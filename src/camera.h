@@ -8,8 +8,9 @@
 class camera
 {
 public:
-    double aspect_ratio;
-    int image_width;
+    double aspect_ratio{1.0};
+    int image_width{100};
+    int samples_per_pixel{10};
 
     void render(const hittable& world);
 
@@ -21,5 +22,7 @@ private:
     vec3 pixel_delta_v;
 
     void initialize();
+    ray get_ray(int i, int j) const;
+    vec3 pixel_sample_square() const;
     color ray_color(const ray& r, const hittable& world) const;
 };
