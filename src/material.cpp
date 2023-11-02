@@ -1,4 +1,5 @@
 #include "material.h"
+#include "vec3.h"
 
 bool lambertian::scatter(
     const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered) const
@@ -17,7 +18,7 @@ bool metal::scatter(
 {
     vec3 reflected{reflect(r_in.direction(), rec.normal)};
 
-    scattered = ray(rec.p, reflected);
+    scattered = ray(rec.p, reflected + fuzz * random_unit_vector());
     attenuation = albedo;
-    return true;
+    return (dot(scattered.direction(), rec.normal) > 0);
 }
