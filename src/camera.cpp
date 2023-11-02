@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "vec3.h"
 
 void camera::render(const hittable& world)
 {
@@ -69,7 +70,8 @@ color camera::ray_color(const ray& r, const hittable& world) const
     hit_record rec;
     if (world.hit(r, interval(0, infinity), rec))
     {
-        return 0.5 * (rec.normal + color(1, 1, 1));
+        vec3 direction{random_on_hemisphere(rec.normal)};
+        return 0.5 * ray_color(ray(rec.p, direction), world);
     }
 
     vec3 unit_direction{unit_vector(r.direction())};

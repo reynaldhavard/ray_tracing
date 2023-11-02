@@ -1,6 +1,7 @@
 #pragma once
 
-#include "rtweekend.h"
+#include "interval.h"
+#include "vec3.h"
 
 #include <iostream>
 

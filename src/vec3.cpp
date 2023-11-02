@@ -32,6 +32,16 @@ double vec3::length_squared() const
 
 }
 
+vec3 vec3::random()
+{
+    return vec3(random_double(), random_double(), random_double());
+}
+
+vec3 vec3::random(double min, double max)
+{
+    return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+}
+
 std::ostream& operator<<(std::ostream &out, const vec3 &v)
 {
     return out << v.x() << ' ' << v.y() << ' ' << v.z();
@@ -81,4 +91,28 @@ vec3 cross(const vec3 &u, const vec3 &v)
 vec3 unit_vector(const vec3 &v)
 {
     return v / v.length();
+}
+
+vec3 random_in_unit_sphere()
+{
+    while (true)
+    {
+        auto p{vec3::random(-1, 1)};
+        if (p.length_squared() < 1)
+            return p;
+    }
+}
+
+vec3 random_unit_vector()
+{
+    return unit_vector(random_in_unit_sphere());
+}
+
+vec3 random_on_hemisphere(const vec3 &normal)
+{
+    vec3 on_unit_sphere{random_unit_vector()};
+    if (dot(on_unit_sphere, normal) > 0.0)
+        return on_unit_sphere;
+    else
+        return -on_unit_sphere;;
 }

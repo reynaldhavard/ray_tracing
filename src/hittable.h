@@ -1,6 +1,8 @@
 #pragma once
 
-#include "rtweekend.h"
+#include "interval.h"
+#include "ray.h"
+#include "vec3.h"
 
 class hit_record
 {
