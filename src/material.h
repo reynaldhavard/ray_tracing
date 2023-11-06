@@ -47,4 +47,6 @@ public:
     bool scatter(const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered) const override;
 private:
     double ir;
+    
+    static double reflectance(double cosine, double ref_idx);
 };
