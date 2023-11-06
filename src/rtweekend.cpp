@@ -1,6 +1,6 @@
 #include "rtweekend.h"
 
-double degrees_radians(double degrees)
+double degrees_to_radians(double degrees)
 {
     return degrees * pi / 180.0;
 }
