@@ -90,7 +90,7 @@ vec3 cross(const vec3 &u, const vec3 &v)
 {
     return vec3(u.y() * v.z() - u.z() * v.y(),
                 u.z() * v.x() - u.x() * v.z(),
-                u.x() * v.y() - u.y() * v.z());
+                u.x() * v.y() - u.y() * v.x());
 }
 
 
