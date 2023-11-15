@@ -23,14 +23,6 @@ int main()
     world.add(std::make_shared<sphere>(point3(-1, 0, -1), -0.4, material_left));
     world.add(std::make_shared<sphere>(point3(1, 0, -1), 0.5, material_right));
     
-    // auto R{std::cos(pi / 4)};
-    //
-    // auto material_left = std::make_shared<lambertian>(color(0, 0, 1));
-    // auto material_right = std::make_shared<lambertian>(color(1, 0, 0));
-    //
-    // world.add(std::make_shared<sphere>(point3(-R, 0, -1), R, material_left));
-    // world.add(std::make_shared<sphere>(point3(R, 0, -1), R, material_right));
-
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0;
@@ -38,10 +30,13 @@ int main()
     cam.samples_per_pixel = 100;
     cam.max_depth = 50;
 
-    cam.vfov = 90;
+    cam.vfov = 20;
     cam.lookfrom = point3(-2, 2, 1);
     cam.lookat = point3(0, 0, -1);
     cam.vup = vec3(0, 1, 0);
+
+    cam.defocus_angle = 10.0;
+    cam.focus_dist = 3.4;
 
     cam.render(world);
 
