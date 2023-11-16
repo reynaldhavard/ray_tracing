@@ -9,4 +9,4 @@ file(GLOB SRC_FILES "src/*.cpp")
 
 include_directories(src)
 
-add_executable(inOneWeekend ${SRC_FILES})
+add_executable(rayTracing ${SRC_FILES})
