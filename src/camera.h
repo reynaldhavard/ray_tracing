@@ -36,6 +36,10 @@ private:
     vec3 defocus_disk_u;
     vec3 defocus_disk_v;
 
+    std::vector<int> image_horizontal_iter;
+    std::vector<int> image_vertical_iter;
+    std::vector<std::vector<std::tuple<int, int, int>>> matrix_image;
+
     void initialize();
     ray get_ray(int i, int j) const;
     vec3 pixel_sample_square() const;

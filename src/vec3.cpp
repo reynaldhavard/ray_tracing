@@ -126,7 +126,7 @@ vec3 random_unit_vector()
     return unit_vector(random_in_unit_sphere());
 }
 
-vec3 random_on_hemisphere(const vec3 &normal)
+vec3 random_on_hemisphere(const vec3& normal)
 {
     vec3 on_unit_sphere{random_unit_vector()};
     if (dot(on_unit_sphere, normal) > 0.0)

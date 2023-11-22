@@ -10,3 +10,5 @@ file(GLOB SRC_FILES "src/*.cpp")
 include_directories(src)
 
 add_executable(rayTracing ${SRC_FILES})
+
+target_link_libraries(rayTracing tbb)
