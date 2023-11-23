@@ -6,7 +6,6 @@
 #include "sphere.h"
 #include "vec3.h"
 
-#include <cstdlib>
 #include <iostream>
 #include <memory>
 
@@ -58,8 +57,8 @@ int main()
 
     cam.aspect_ratio = 16.0 / 9.0;
     cam.image_width = 1200;
-    cam.samples_per_pixel = 10;
-    cam.max_depth = 50;
+    cam.samples_per_pixel = 32;
+    cam.max_depth = 8;
 
     cam.vfov = 20;
     cam.lookfrom = point3(13, 2, 3);
@@ -69,7 +68,19 @@ int main()
     cam.defocus_angle = 0.6;
     cam.focus_dist = 10.0;
 
-    cam.render(world);
+    cam.initialize();
+
+    SDL sdl(cam.image_width, cam.image_height);
+
+    cam.render(world, sdl);
+
+    // Keep window open until we close it
+    while (true){
+        if (sdl.quit()){
+            break;
+        }
+        sdl.render();
+    }
 
     return 0;
 

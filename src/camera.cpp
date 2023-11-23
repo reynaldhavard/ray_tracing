@@ -2,28 +2,28 @@
 #include "rtweekend.h"
 #include "vec3.h"
 
-void camera::render(const hittable& world)
+void camera::render(const hittable& world, SDL& sdl)
 {
-    camera::initialize();
+    for (int j = 0; j < image_height; ++j){
+        if (sdl.quit()){
+            break;
+        }
 
-    std::for_each(image_vertical_iter.begin(), image_vertical_iter.end(),
-    [this, &world](int j)
-    {
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
-        std::for_each(std::execution::par, image_horizontal_iter.begin(), image_horizontal_iter.end(),
-        [this, j, &world](int i)
-            {
-                color pixel_color(0, 0, 0);
-                for (int sample{0}; sample<samples_per_pixel; ++sample)
-                {
-                    ray r{get_ray(i, j)};
-                    pixel_color += ray_color(r, max_depth, world);
-                }
-                write_color_to_mat(matrix_image, j, i, pixel_color, samples_per_pixel);
 
-            });
-    });
-    write_colors(matrix_image);
+        #pragma omp parallel for
+        for (int i = 0; i < image_width; ++i){
+            color pixel_color(0, 0, 0);
+            for (int sample{0}; sample<samples_per_pixel; ++sample)
+            {
+                ray r{get_ray(i, j)};
+                pixel_color += ray_color(r, max_depth, world);
+            }
+            write_color_to_frame_buffer(sdl, i+j*image_width, pixel_color, samples_per_pixel);
+        }
+        sdl.render();
+    }
+    output_colors(sdl, image_width, image_height);
     std::clog << "\rDone. \n";
 }
 
@@ -55,19 +55,6 @@ void camera::initialize()
     auto defocus_radius{focus_dist * std::tan(degrees_to_radians(defocus_angle / 2))};
     defocus_disk_u = u * defocus_radius;
     defocus_disk_v = v * defocus_radius;
-
-    image_horizontal_iter.resize(image_width);
-    image_vertical_iter.resize(image_height);
-    for (int i = 0; i < image_width; ++i){
-        image_horizontal_iter[i] = i;
-    }
-    for (int i = 0; i < image_height; ++i){
-        image_vertical_iter[i] = i;
-    }
-    matrix_image.resize(image_height);
-    for (int i = 0; i < image_height; ++i){
-        matrix_image[i].resize(image_width);
-    }
 }
 
 ray camera::get_ray(int i, int j) const
