@@ -7,6 +7,7 @@
 class vec3 
 {
 public:
+    double e[3];
     vec3()
         : e{0, 0, 0} {}
 
@@ -29,9 +30,6 @@ public:
     bool near_zero() const;
     static vec3 random();
     static vec3 random(double min, double max);
-
-private:
-    double e[3];
 };
 
 // point3 is just an alias for vec3

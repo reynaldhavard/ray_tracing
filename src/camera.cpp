@@ -84,10 +84,10 @@ point3 camera::defocus_disk_sample() const
 
 color camera::ray_color(const ray& r, int depth, const hittable_list& world) const
 {
-    hit_record rec;
-
     if (depth <= 0)
         return color(0, 0, 0);
+
+    hit_record rec;
 
     if (world.hit(r, interval(0.001, infinity), rec))
     {

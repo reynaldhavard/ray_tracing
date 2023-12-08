@@ -29,8 +29,8 @@ double vec3::length() const
 double vec3::length_squared() const 
 {
     return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
-
 }
+
 bool vec3::near_zero() const
 {
     auto s = 1e-8;
@@ -49,27 +49,27 @@ vec3 vec3::random(double min, double max)
 
 std::ostream& operator<<(std::ostream &out, const vec3 &v)
 {
-    return out << v.x() << ' ' << v.y() << ' ' << v.z();
+    return out << v.e[0] << ' ' << v.e[1] << ' ' << v.e[2];
 }
 
 vec3 operator+(const vec3 &u, const vec3 &v)
 {
-    return vec3(u.x() + v.x(), u.y() + v.y(), u.z() + v.z());
+    return vec3(u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]);
 }
 
 vec3 operator-(const vec3 &u, const vec3 &v)
 {
-    return vec3(u.x() - v.x(), u.y() - v.y(), u.z() - v.z());
+    return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
 }
 
 vec3 operator*(const vec3 &u, const vec3 &v)
 {
-    return vec3(u.x() * v.x(), u.y() * v.y(), u.z() * v.z());
+    return vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
 }
 
 vec3 operator*(double t, const vec3 &v)
 {
-    return vec3(t * v.x(), t * v.y(), t * v.z());
+    return vec3(t * v.e[0], t * v.e[1], t * v.e[2]);
 }
 
 vec3 operator*(const vec3 &v, double t){
@@ -82,14 +82,14 @@ vec3 operator/(const vec3 &v, double t){
 
 double dot(const vec3 &u, const vec3 &v)
 {
-    return u.x() * v.x() + u.y() * v.y() + u.z() * v.z();
+    return u.e[0] * v.e[0] + u.e[1] * v.e[1] + u.e[2] * v.e[2];
 }
 
 vec3 cross(const vec3 &u, const vec3 &v)
 {
-    return vec3(u.y() * v.z() - u.z() * v.y(),
-                u.z() * v.x() - u.x() * v.z(),
-                u.x() * v.y() - u.y() * v.x());
+    return vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+                u.e[2] * v.e[0] - u.e[0] * v.e[2],
+                u.e[0] * v.e[1] - u.e[1] * v.e[0]);
 }
 
 

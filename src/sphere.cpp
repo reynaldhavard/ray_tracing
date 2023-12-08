@@ -4,9 +4,9 @@
 bool sphere::hit(const ray& r, interval ray_t, hit_record& rec, int material_index) const
 {
     vec3 oc{r.origin() - center};
-    double a{dot(r.direction(), r.direction())};
+    double a{r.direction().length_squared()};
     double b{2.0 * dot(oc, r.direction())};
-    double c{dot(oc, oc) - radius * radius};
+    double c{oc.length_squared() - radius * radius};
     double discriminant{b * b - 4 * a * c};
 
     if (discriminant < 0)
