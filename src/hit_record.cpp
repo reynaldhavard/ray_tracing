@@ -1,4 +1,4 @@
-#include "hittable.h"
+#include "hit_record.h"
 
 void hit_record::set_face_normal(const ray& r, const vec3& outward_normal)
 {

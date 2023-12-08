@@ -14,8 +14,9 @@ int main()
 {
     hittable_list world;
 
-    auto ground_material = std::make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    world.add(std::make_shared<sphere>(point3(0, -1000, 0), 1000, ground_material));
+    auto ground_material = lambertian(color(0.5, 0.5, 0.5));
+    auto ground_sphere = sphere(point3(0, -1000, 0), 1000);
+    world.add(ground_sphere, ground_material);
 
     for (int a = -11; a < 11; ++a){
         for (int b = -11; b < 11; ++b){
@@ -23,36 +24,40 @@ int main()
             point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
 
             if ((center - point3(4, 0.2, 0)).length() > 0.9){
-                std::shared_ptr<material> sphere_material;
+                material mat;
 
                 if (choose_mat < 0.8){
                     // diffuse
                     auto albedo = color::random() * color::random();
-                    sphere_material = std::make_shared<lambertian>(albedo);
+                    mat = lambertian(albedo);
                 }
                 else if (choose_mat < 0.95){
                     // metal
                     auto albedo = color::random(0.5, 1);
                     auto fuzz = random_double(0, 0.5);
-                    sphere_material = std::make_shared<metal>(albedo, fuzz);
+                    mat = metal(albedo, fuzz);
                 }
                 else {
-                    sphere_material = std::make_shared<dielectric>(1.5);
+                    mat = dielectric(1.5);
                 }
-                world.add(std::make_shared<sphere>(center, 0.2, sphere_material));
+                auto s = sphere(center, 0.2);
+                world.add(s, mat);
             }
         }
     }
 
-    auto material1 = std::make_shared<dielectric>(1.5);
-    world.add(std::make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
+    auto material1 = dielectric(1.5);
+    auto s1 = sphere(point3(0, 1, 0), 1.0);
+    world.add(s1, material1);
 
-    auto material2 = std::make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    world.add(std::make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
+    auto material2 = lambertian(color(0.4, 0.2, 0.1));
+    auto s2 = sphere(point3(-4, 1, 0), 1.0);
+    world.add(s2, material2);
 
-    auto material3 = std::make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    world.add(std::make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
-    
+    auto material3 = metal(color(0.7, 0.6, 0.5), 0.0);
+    auto s3 = sphere(point3(4, 1, 0), 1.0);
+    world.add(s3, material3);
+
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0;

@@ -1,6 +1,7 @@
 #include "sphere.h"
+#include "hittable_list.h"
 
-bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const
+bool sphere::hit(const ray& r, interval ray_t, hit_record& rec, int material_index) const
 {
     vec3 oc{r.origin() - center};
     double a{dot(r.direction(), r.direction())};
@@ -23,9 +24,9 @@ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const
 
     rec.t = root;
     rec.p = r.at(rec.t);
+    rec.material_index = material_index;
     vec3 outward_normal = (rec.p - center) / radius;
     rec.set_face_normal(r, outward_normal);
-    rec.mat = mat;
 
     return true;
 }

@@ -3,7 +3,8 @@
 #include "rtweekend.h"
 
 #include "color.h"
-#include "hittable.h"
+#include "hit_record.h"
+#include "hittable_list.h"
 #include "material.h"
 #include "sdl.h"
 
@@ -25,7 +26,7 @@ public:
     double focus_dist{10};
 
     void initialize();
-    void render(const hittable& world, SDL& sdl);
+    void render(const hittable_list& world, SDL& sdl);
 
 private:
     point3 center;
@@ -41,5 +42,5 @@ private:
     ray get_ray(int i, int j) const;
     vec3 pixel_sample_square() const;
     point3 defocus_disk_sample() const;
-    color ray_color(const ray& r, int depth, const hittable& world) const;
+    color ray_color(const ray& r, int depth, const hittable_list& world) const;
 };

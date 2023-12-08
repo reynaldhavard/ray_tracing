@@ -2,7 +2,7 @@
 #include "rtweekend.h"
 #include "vec3.h"
 
-void camera::render(const hittable& world, SDL& sdl)
+void camera::render(const hittable_list& world, SDL& sdl)
 {
     for (int j = 0; j < image_height; ++j){
         if (sdl.quit()){
@@ -82,7 +82,7 @@ point3 camera::defocus_disk_sample() const
     return center + (p[0] * defocus_disk_u) + (p[1] * defocus_disk_v);
 }
 
-color camera::ray_color(const ray& r, int depth, const hittable& world) const
+color camera::ray_color(const ray& r, int depth, const hittable_list& world) const
 {
     hit_record rec;
 
@@ -93,7 +93,13 @@ color camera::ray_color(const ray& r, int depth, const hittable& world) const
     {
         ray scattered;
         color attenuation;
-        if (rec.mat->scatter(r, rec, attenuation, scattered))
+        if (std::visit(
+                overload{
+                    [&](const auto &material) { 
+                        return material.scatter(r, rec, attenuation, scattered);
+                    },
+                },
+            world.materials[rec.material_index]))
             return attenuation * ray_color(scattered, depth - 1, world);
         return color(0, 0, 0);
     }

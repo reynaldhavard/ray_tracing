@@ -1,18 +1,20 @@
 #pragma once
 
-#include "hittable.h"
+#include "hit_record.h"
+#include "rtweekend.h"
 #include <memory>
 
-class sphere : public hittable
+class hit_record;
+
+class sphere
 {
 public:
-    sphere(point3 _center, double _radius, std::shared_ptr<material> _material)
-        : center{_center}, radius{_radius}, mat{_material} {}
+    sphere(point3 _center, double _radius)
+        : center{_center}, radius{_radius} {}
 
-    bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
+    bool hit(const ray& r, interval ray_t, hit_record& rec, int material_index) const;
 
 private:
     point3 center;
     double radius;
-    std::shared_ptr<material> mat;
 };
